@@ -10,9 +10,8 @@
 using namespace std;
 bool importarDados(vector<Venda>& vetorVendas);
 bool importarDados();
-bool separarAtributos(string linha, vector<Venda>& vetorVenda);
-
-
+Venda parseVenda(string linha);
+Investidor parseInvestidor(string linha);
 
 
 

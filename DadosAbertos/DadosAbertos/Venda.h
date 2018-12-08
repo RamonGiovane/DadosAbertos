@@ -22,6 +22,7 @@ public:
 	string toString();
 
 	Venda();
+	Venda(string atributos);
 	Venda(string tipoTitulo, string dataVenda, string vencimentoTitulo, 
 		float precoUnitario, float quantidade, float valor);
 	~Venda();

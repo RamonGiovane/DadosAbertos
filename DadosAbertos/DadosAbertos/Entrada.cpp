@@ -18,6 +18,8 @@ void menuPesquisar() {
 		"2 - Tipo de Título\n"\
 		"\nEscolha: ";
 	cout << menu;
+	cin >> operacao;
+	
 
 }
 
@@ -28,6 +30,7 @@ void menuRelatorio() {
 		"3 - Investidores por Gênero\n"\
 		"4 - Investidores por Região\n"\
 		"\nEscolha: ";
+	cin >> operacao;
 
 }
 

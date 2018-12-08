@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Conta.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Investidor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -48,9 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArquivoTexto.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Conta.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Investidor.h">
