@@ -1,3 +1,5 @@
 Debug/
 x64/
 *.opendb
+/DadosAbertos/.vs/DadosAbertos/v14/.suo
+/DadosAbertos/DadosAbertos.VC.db
