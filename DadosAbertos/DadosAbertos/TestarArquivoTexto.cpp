@@ -13,19 +13,59 @@ void localizacao() {
 	setlocale(LC_ALL, "pt-BR");
 }
 
-void iniciar() {
-	importarDados();
-
-}
-
 int main() {
 	localizacao();
 	//vector <Dado> vetor;
 	//return testarArquivoTexto(vetor);
-	iniciar();
+	importarDados();
 	//ProgressBar pb(150, 2, 10);
 	//pb.show(1, 1, 1);
 }
+
+/*bool separar(vector <Dado> &vectorDados, string& linhas) {
+	
+	size_t posicao = 0;
+	string separador = "\n";
+	string token;
+	
+	if (linhas.empty())
+		return false;
+	Dado dados;
+	
+	while ((posicao = linhas.find(separador)) != string::npos) {
+		token = linhas.substr(0, posicao);
+
+		linhas.erase(0, posicao + separador.length());
+		vectorDados.push_back(Dado(token));
+	}
+
+	return true;
+}*/
+
+
+/*Dado separar(string linha) {
+
+size_t posicao = 0;
+string separador = ";";
+string token;
+
+if (linha.empty())
+	return Dado();
+Dado dado;
+
+while ((posicao = linha.find(separador)) != string::npos) {
+	token = linha.substr(0, posicao);
+	linha.erase(0, posicao + separador.length());
+	
+	//Salva no objeto real
+	//# DO SOME SHIT
+}
+
+return dado;
+}
+*/
+
+
 
 
 // Testa o funcionamento dos métodos da classe ArquivoTexto.

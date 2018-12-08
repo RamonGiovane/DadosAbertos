@@ -101,7 +101,7 @@ string ArquivoTexto::lerLinha(int numeroLinha) {
 	e retorna no objeto string essas strings*/
 string ArquivoTexto::lerLinha(int quantidadeLinhas, bool partirDoComeco) {
 	string linhas;
-	static size_t posicaoNoArquivo = 0;;
+	static int posicaoNoArquivo = 0;;
 	if (partirDoComeco)
 		posicaoNoArquivo = 0;
 
@@ -112,7 +112,7 @@ string ArquivoTexto::lerLinha(int quantidadeLinhas, bool partirDoComeco) {
 	if (!inputFile || inputFile.eof()) {
 		return "NULL";
 	}
-
+	
 	inputFile.seekg(posicaoNoArquivo, inputFile.beg);
 	for (int i = 0; (i <= quantidadeLinhas) && ((linhas.length() + strlen(buffer)) <= tamanhoString); i++) {
 		if (strlen(buffer) > 0) {
@@ -128,6 +128,33 @@ string ArquivoTexto::lerLinha(int quantidadeLinhas, bool partirDoComeco) {
 
 	return linhas;
 }
+/*
+bool ArquivoTexto::ler(vector <Dado>&vetor) {
+
+	string linha;
+	char buffer[256];
+	if (!inputFile || inputFile.eof()) {
+		return false;
+	}
+	int cont = 0;
+	while (!inputFile.eof()) {
+		if (strlen(buffer) > 0) {
+			linha = buffer + '\n';
+			vetor.push_back(Dado(separar(linha)));
+		}
+		inputFile.getline(buffer, 256, '\n');
+		cont++;
+	}
+	cout << "\nDone: " << cont << " Size: " << vetor.size();
+	
+	return true;
+}
+*/
+
+
+
+
+
 
 // Fecha o arquivo texto.
 void ArquivoTexto::fechar() {

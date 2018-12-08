@@ -8,9 +8,9 @@ class Investidor{
 public:
 	Investidor::Investidor();
 	Investidor::Investidor(string codigoInvestidor, int idade, string dataAdesao, string estadoCivil,
-		string profissao, string cidadeInvestidor, string UFInvestidor, string paisInvestidor,
+		string profissao, string cidadeInvestidor, string paisInvestidor,
 		string situacaoConta, char genero, bool operacaoRecente);
-	
+
 	void setOperacaoRecente(bool operacaoRecente);
 	void setGenero(char genero);
 	void setSituacaoConta(string situacaoConta);
@@ -19,15 +19,9 @@ public:
 	void setProfissao(string profissao);
 	void setCidadeInvestidor(string cidadeInvestidor);
 	void setPaisInvestidor(string paisInvestidor);
-	void setCodigoInvestidor(string codigoInvestidor);
-	void setIdade(int idade);
-	void setUFInvestidor(string UFInvestidor);
 			
-	string getUFInvestidor();
 	char getGenero();
 	bool isOperacaoRecente();
-	int getIdade();
-	string getCodigoInvestidor();
 	string getSituacaoConta();
 	string getDataAdesao();
 	string getProfissao();
@@ -39,7 +33,7 @@ public:
 private:
 	string codigoInvestidor;
 	int idade;
-	string estadoCivil, profissao, cidadeInvestidor, UFInvestidor, paisInvestidor, dataAdesao;
+	string estadoCivil, profissao, cidadeInvestidor, paisInvestidor, dataAdesao;
 	string situacaoConta;
 	bool operacaoRecente;
 	char genero;

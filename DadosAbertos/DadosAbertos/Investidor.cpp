@@ -15,10 +15,8 @@ Investidor::Investidor() {
 
 /*Construtor sobrecarregado com onde todos os atributos de um Investidor podem ser passados por prâmetro*/
 Investidor::Investidor(string codigoInvestidor, int idade, string dataAdesao, string estadoCivil,
-		string profissao, string cidadeInvestidor, string UFInvestidor, string paisInvestidor,
-		string situacaoConta, char genero, bool operacaoRecente) {
-	
-	this->UFInvestidor = UFInvestidor;
+	string profissao, string cidadeInvestidor, string paisInvestidor,
+	string situacaoConta, char genero, bool operacaoRecente) {
 	this->codigoInvestidor = codigoInvestidor;
 	this->idade = idade;
 	this->dataAdesao = dataAdesao;
@@ -33,24 +31,12 @@ Investidor::Investidor(string codigoInvestidor, int idade, string dataAdesao, st
 }
 
 
-string Investidor::getUFInvestidor(){
-	return UFInvestidor;
-}
-
 char Investidor::getGenero(){
 	return this->genero;
 }
 
 bool Investidor::isOperacaoRecente() {
 	return operacaoRecente;
-}
-
-int Investidor::getIdade(){
-	return idade;
-}
-
-string Investidor::getCodigoInvestidor(){
-	return codigoInvestidor;
 }
 
 string Investidor::getSituacaoConta() {
@@ -88,18 +74,6 @@ void Investidor::setCidadeInvestidor(string cidadeInvestidor){
 
 void Investidor::setPaisInvestidor(string paisInvestidor){
 	this->paisInvestidor = paisInvestidor;
-}
-
-void Investidor::setCodigoInvestidor(string codigoInvestidor){
-	this->codigoInvestidor = codigoInvestidor;
-}
-
-void Investidor::setIdade(int idade){
-	this->idade = idade;
-}
-
-void Investidor::setUFInvestidor(string UFInvestidor){
-	this->UFInvestidor = UFInvestidor;
 }
 
 string Investidor::getDataAdesao() {
