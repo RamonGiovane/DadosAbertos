@@ -1,4 +1,5 @@
 #include "Venda.h"
+#include "EntradaESaida.h"
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -52,7 +53,14 @@ void Venda::setValor(float valor){
 	this->valor = valor;
 }
 
+/*Retorna o tipo de do título do tesouro direto do objeto atual em string*/
+string tipoTituloEmString() {
+	return "";
+}
+
+/*Converte os atributos de um objeto Venda em uma string formatada*/
 string Venda::toString(){
+	string tipoTitulo = tipoTituloEmString();
 	char texto[250];
 	sprintf_s(texto, 250, "\nTipo Título: %s\nVencimento do Título : %s\nData da Venda: %s"\
 		"\nPreço Unitário: %.2f\nQuantidade: %.2f\nValor: %.2f", tipoTitulo.c_str(),
@@ -60,6 +68,41 @@ string Venda::toString(){
 	return texto;
 
 }
+
+/*Separa os atributos(dados) de uma venda do tesouro direto formatados em uma string e separados por ponto e vírgula (";"), 
+salvando-os em novo objeto Venda que será retornado*/
+Venda Venda::parseVenda(string atributos){
+		size_t posicao = 0, contador = 1;
+		char separador = ';';
+		string token;
+
+		Venda venda;
+
+		if (atributos.empty())
+			return false;
+
+		istringstream iss(atributos);
+
+		while (getline(iss, token, separador)) {
+
+			switch (contador) {
+			case 1: venda.setTipoTitulo(token); break;
+			case 2: venda.setVencimentoTitulo(token); break;
+			case 3: venda.setDataVenda(token); break;
+			case 4: venda.setPrecoUnitario(stof(EntradaESaida::formatarSeparadorNumero(token))); break;
+			case 5: venda.setQuantidade(stof(EntradaESaida::formatarSeparadorNumero(token))); break;
+			case 6: venda.setValor(stof(EntradaESaida::formatarSeparadorNumero(token))); break;
+			default: break;
+
+			}
+
+			contador++;
+		}
+
+		return venda;
+}
+	
+
 
 Venda::Venda(){
 	
@@ -77,23 +120,23 @@ Venda::Venda(string atributos){
 	int contador = 1;
 	string token;
 	istringstream iss(atributos);
-	cout << token << endl;
-	cout << endl << token;	
+	
 	while (getline(iss, token, ';')) {
 
 		switch (contador) {
 		case 1: setTipoTitulo(token); break;
 		case 2: setVencimentoTitulo(token); break;
 		case 3: setDataVenda(token); break;
-		case 4: setPrecoUnitario(stof((token))); break;
-		case 5: setQuantidade(stof(token)); break;
-		case 6: setValor(stof(token)); break;
+		case 4: setPrecoUnitario(EntradaESaida::stringParaFloat(token)); break;
+		case 5: setQuantidade(EntradaESaida::stringParaFloat(token)); break;
+		case 6: setValor(EntradaESaida::stringParaFloat(token)); break;
 		default: break;
 
 		}
 
 		contador++;
 	}
+	
 }
 
 Venda::Venda(string tipoTitulo, string dataVenda, string vencimentoTitulo,

@@ -42,6 +42,9 @@
     <ClCompile Include="Entrada.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="EntradaESaida.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArquivoTexto.h">
@@ -63,6 +66,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Dado.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EntradaESaida.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

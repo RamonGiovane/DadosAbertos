@@ -20,7 +20,10 @@ public:
 	void setValor(float valor);
 	
 	string toString();
-
+	static Venda parseVenda(string atributos);
+	
+	enum TiposTesouroDireto { PREFIXADO, IGPM, SELIC };
+	
 	Venda();
 	Venda(string atributos);
 	Venda(string tipoTitulo, string dataVenda, string vencimentoTitulo, 

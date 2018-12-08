@@ -6,14 +6,29 @@
 #include <string>
 #include "Investidor.h"
 #include "Venda.h"
+#include "EntradaESaida.h"
+#include "ArquivoTexto.h"
 
 using namespace std;
-bool importarDados(vector<Venda>& vetorVendas);
+
 bool importarDados();
-Venda parseVenda(string linha);
-Investidor parseInvestidor(string linha);
 
+class DadosAbertos {
+public:
+	enum TipoDeDado { VENDAS, INVESTIDOR};
+	
 
+private:
+	vector<Venda> vetorVendas;
+	vector<Investidor> vetorInvestidores;
+	const string VENDAS_PATH = "../../../VendasTesouroDireto.csv";
+	const string INVESTIDORES_PATH = "../../../VendasTesouroDireto.csv";
+	bool abrirArquivo(ArquivoTexto & arquivo, const string nomeArquivo);
+	bool adicionar(string atributos, int tipoDeDado);
+	bool separarLinhas(string leitura, int tipoDeDado);
+	bool importarDados(int tipoDeDado);
+
+};
 
 inline void pause() {
 	system("pause");

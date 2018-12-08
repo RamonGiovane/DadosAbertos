@@ -2,7 +2,7 @@
 #include <string>
 #ifndef INVESTIDOR_H
 #define INVESTIDOR_H
-//Codigo do Investidor;Data de Adesao;Estado Civil;Genero;Profissao;Idade;UF do Investidor;Cidade do Investidor;Pais do Investidor;Situacao da Conta;Operou 12 Meses
+
 using namespace std;
 class Investidor{
 public:
@@ -35,6 +35,7 @@ public:
 	string getPaisInvestidor();
 	
 	string toString();
+	static Investidor parseInvestidor(string atributos);
 
 private:
 	string codigoInvestidor;

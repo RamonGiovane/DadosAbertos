@@ -1,6 +1,8 @@
 #include "Investidor.h"
-/*Construtor padrão que incializa todos os atributos com valores nulos, caso deseje-se realizar chamadas menores (com menos parâmetros)
-ao construtor. Pode ser útil para representar um objeto nulo ou vazio.
+#include <sstream>
+#include "EntradaESaida.h"
+/*Construtor padrão que incializa todos os atributos com valores nulos, caso deseje-se realizar chamadas 
+menores (com menos parâmetros)ao construtor. Pode ser útil para representar um objeto nulo ou vazio.
 ATENÇÃO: Ao usá-lo, os atributos DEVEM ser setados com valores consistentes posteriormente*/
 Investidor::Investidor() {
 	codigoInvestidor = "NULL";
@@ -141,3 +143,42 @@ string Investidor::toString(){
 		paisInvestidor.c_str(), profissao.c_str(), genero.c_str(), operacaoRecente.c_str());
 	return texto;
 }
+
+/*Separa os atributos(dados) de um investidor do tesouro direto formatados em uma string e separados por ponto e vírgula (";"),
+salvando-os em novo objeto Investidor que será retornado*/
+Investidor Investidor::parseInvestidor(string atributos){
+		size_t posicao = 0, contador = 1;
+		char separador = ';';
+		string token;
+
+		Investidor investidor;
+
+		if (atributos.empty())
+			return Investidor();
+
+		istringstream iss(atributos);
+
+		while (getline(iss, token, separador)) {
+
+			switch (contador) {
+			case 1: investidor.setCodigoInvestidor(token); break;
+			case 2: investidor.setDataAdesao(token); break;
+			case 3: investidor.setEstadoCivil(token); break;
+			case 4: investidor.setGenero(token.c_str()[0]); break;
+			case 5: investidor.setProfissao(token); break;
+			case 6: investidor.setIdade(EntradaESaida::stringParaInt(token)); break;
+			case 7: investidor.setUFInvestidor(token); break;
+			case 8: investidor.setCidadeInvestidor(token); break;
+			case 9: investidor.setPaisInvestidor(token); break;
+			case 10: investidor.setSituacaoConta(token); break;
+			case 11: investidor.setOperacaoRecente(token == "S" ? true : false); break;
+
+			default: break;
+
+			}
+
+			contador++;
+		}
+
+		return investidor;
+	}

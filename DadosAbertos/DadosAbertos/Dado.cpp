@@ -2,59 +2,54 @@
 #include <sstream>
 #include <vector>
 #include <ctime>
-#include <algorithm>
 #include "Venda.h"
 #include "Dado.h"
 #include "ArquivoTexto.h"
 
-/*
-Remove o uso de pontos (.) para representar números na casa de milhar em números de
-ponto flutuante dentro de uma string.
-Exemplo de entrada: 1.000,00 -> exemplo de saída: 1000,00
-*/
-string converterNumero(string numero) {
-	numero.erase(remove(numero.begin(), numero.end(), '.'));
-
-	return numero;
-}
-
-void msgFalhaDeImportacao(string tipoDeArquivo) {
-	cout << "\nNão foi possível importar os dados de " << tipoDeArquivo << "!\nArquivo corrompido ou inexistente.\n";
-}
-
 /*Abre um arquivo de texto especificado por <nomeArquivo> e o retorna sua referêcia pelo parâmtetro <arquivo>
 Retorna: true se a abertura foi realizada com sucesso; do contrário false.*/
-bool abrirArquivo(ArquivoTexto& arquivo, string nomeArquivo) {
+bool DadosAbertos::abrirArquivo(ArquivoTexto & arquivo, const string nomeArquivo) {
 	string leitura;
-	//cout << "Damn " << nomeArquivo << " " << arquivo.abrir(nomeArquivo, LEITURA);
 	if (arquivo.abrir(nomeArquivo, LEITURA))
 		return true;
 	return false;
-
 }
 
-string separarLinhas(string& leitura) {
+/*Converte uma linha(string) e a adiciona como objeto em um dos vector de Dados Abertos de acordo
+com com o seu tipo do objeto especificado em <tipoDeDado>.*/
+bool DadosAbertos::adicionar(string atributos, int tipoDeDado) {
+	if (atributos.empty())
+		return false;
+	if(tipoDeDado == INVESTIDOR)
+		vetorInvestidores.push_back(Investidor::parseInvestidor(atributos));
+	else
+		vetorVendas.push_back(Venda::parseVenda(atributos));
+	return true;
+}
+
+/*Separa as linhas do arquivo formatadas em um objeto string e as adiciona no vector de Dados Abertos
+de acordo com o tipo especificado em <tipoDeDado> */
+bool DadosAbertos::separarLinhas(string leitura, int tipoDeDado ) {
 	if (leitura.empty())
-		return "NULL";
+		return false;
 
 	string token;
 	
 	istringstream iss(leitura);
-
 	
-	getline(iss, token, '\n');
-
+	while (getline(iss, token, '\n'))
+		adicionar(token, tipoDeDado);
 	
-	leitura.erase(leitura.begin(), leitura.begin() + token.size()+1);
-	
-	return token;
+	return true;
 
 }
 
-bool importarDados(vector<Venda>& vetorVendas) {
+/*Abre um arquivo do tipo Vendas do Tesouro Direto e importa os dados contidos nele*/
+bool DadosAbertos::importarDados(int tipoDeDado) {
 	ArquivoTexto arquivo;
+	
 	string leitura, linhas;
-	if (!abrirArquivo(arquivo, "../../../VendasTesouroDireto.csv"))
+	if (!abrirArquivo(arquivo, (tipoDeDado == VENDAS ? VENDAS_PATH : INVESTIDORES_PATH)))
 		return false;
 	
 	time_t inicio, fim;
@@ -65,14 +60,8 @@ bool importarDados(vector<Venda>& vetorVendas) {
 	leitura = arquivo.lerLinha(60000, false);
 	cout << endl << leitura.size();
 	do {
-		linhas = separarLinhas(leitura);
-		if (linhas == "NULL") break;
+		linhas = separarLinhas(leitura, tipoDeDado);
 
-		vetorVendas.push_back(parseVenda(linhas));
-	
-		cout << vetorVendas[vetorVendas.size() - 1].toString();
-		cout << vetorVendas.size();
-		pause();
 	} while (true);
 		
 	time(&fim);
@@ -80,7 +69,8 @@ bool importarDados(vector<Venda>& vetorVendas) {
 	return true;
 }
 
-bool importarDados(vector<Investidor>& vetorInvestidores) {
+/*bool importarDados(vector<Investidor>& vetorInvestidores) {
+	return false;
 	ArquivoTexto arquivo;
 	string leitura;
 	if(!arquivo.abrir("../../../InvestidoresTesouroDireto - Cópia.csv", LEITURA))
@@ -101,102 +91,15 @@ bool importarDados(vector<Investidor>& vetorInvestidores) {
 	time(&fim);
 	cout << difftime(fim, inicio) << " segundos" << endl;
 	return true;
-}
+}*/
 
 
 
 bool importarDados() {
-	vector<Venda> vetorVendas;
-	vector<Investidor> vetorInvestidores;
-	ArquivoTexto arquivo;
-	
-	cout << "Importando Vendas: " << endl;
-		
-	if (!importarDados(vetorVendas))
-		msgFalhaDeImportacao("vendas");
-
-	
-	cout << "Tamanho do vector vendas: " << vetorVendas.size();
-	//cout << vetorVendas[vetorVendas.size()-1].toString();
-
-	cout << "Importando Investidores: " << endl;
-
-	if (!importarDados(vetorInvestidores))
-		msgFalhaDeImportacao("investidores");
-	
-	cout << "Tamanho do vector investidores: " << vetorInvestidores.size();
-	vetorInvestidores[vetorInvestidores.size()-1].toString();
-
+	cout << "We're not ready yet!";
 	return true;
 }
 
 
 
-Venda parseVenda(string linha){
-	size_t posicao = 0, contador = 1;
-	string separador = ";";
-	string token;
-
-	Venda venda;
-
-	if (linha.empty())
-		return false;
-
-	istringstream iss(linha);
-	
-	while (getline(iss, token, ';')){
-		
-		switch (contador) {
-		case 1: venda.setTipoTitulo(token); break;
-		case 2: venda.setVencimentoTitulo(token); break;
-		case 3: venda.setDataVenda(token); break;
-		case 4: venda.setPrecoUnitario(stof(converterNumero(token))); break;
-		case 5: venda.setQuantidade(stof(converterNumero(token))); break;
-		case 6: venda.setValor(stof(converterNumero(token))); break;
-		default: break;
-
-		}
-		
-		contador++;
-	}
-
-	return venda;
-}
-
-Investidor parseInvestidor(string linha) {
-	size_t posicao = 0, contador = 1;
-	string separador = ";";
-	string token;
-
-	Investidor investidor;
-
-	if (linha.empty())
-		return Investidor();
-
-	istringstream iss(linha);
-
-	while (getline(iss, token, ';')) {
-
-		switch (contador) {
-		case 1: investidor.setCodigoInvestidor(token); break;
-		case 2: investidor.setDataAdesao(token); break;
-		case 3: investidor.setEstadoCivil(token); break;
-		case 4: investidor.setGenero(token.c_str()[0]); break;
-		case 5: investidor.setProfissao(token); break;
-		case 6: investidor.setIdade(stoi(token)); break;
-		case 7: investidor.setUFInvestidor(token); break;
-		case 8: investidor.setCidadeInvestidor(token); break;
-		case 9: investidor.setPaisInvestidor(token); break;
-		case 10: investidor.setSituacaoConta(token); break;
-		case 11: investidor.setOperacaoRecente(token == "S" ? true : false); break;
-		
-		default: break;
-
-		}
-
-		contador++;
-	}
-
-	return investidor;
-}
 

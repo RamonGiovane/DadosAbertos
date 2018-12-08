@@ -3,7 +3,6 @@
 #define ARQUIVO_TEXTO
 
 #include <fstream>
-#include "Dado.h"
 #include <vector>
 #include <string>
 
@@ -63,7 +62,6 @@ public:
 
 	string lerLinha(int quantidadeLinhas, bool partirDoComeco);
 
-	bool ler(vector <Venda>&vetor);
 
 private:
 	string nomeArquivo, texto;
