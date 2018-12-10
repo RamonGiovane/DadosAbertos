@@ -3,7 +3,7 @@
 
 #include "ArquivoTexto.h"
 #include <vector>
-#include "Dado.h"
+#include "DadosAbertos.h"
 /* Cria um arquivo texto no diretório atual. Os parâmetros são:
 
 	1. nomeArquivo: nome do arquivo texto;

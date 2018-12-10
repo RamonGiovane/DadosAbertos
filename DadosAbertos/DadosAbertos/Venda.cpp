@@ -5,7 +5,28 @@
 #include <string>
 
 using namespace std;
-string Venda::getTipoTitulo(){
+
+Venda::Venda() {
+
+	tipoTitulo = 0;
+	dataVenda = "NULL";
+	vencimentoTitulo = "NULL";
+	precoUnitario = 0;
+	quantidade = 0;
+	valor = 0;
+}
+
+Venda::Venda(int tipoTitulo, string dataVenda, string vencimentoTitulo,
+	float precoUnitario, float quantidade, float valor) {
+	this->tipoTitulo = tipoTitulo;
+	this->dataVenda = dataVenda;
+	this->vencimentoTitulo = vencimentoTitulo;
+	this->precoUnitario = precoUnitario;
+	this->quantidade = quantidade;
+	this->valor = valor;
+}
+
+int Venda::getTipoTitulo(){
 	return tipoTitulo;
 }
 
@@ -29,7 +50,7 @@ float Venda::getValor(){
 	return valor;
 }
 
-void Venda::setTipoTitulo(string tipoTitulo){
+void Venda::setTipoTitulo(int tipoTitulo){
 	this->tipoTitulo = tipoTitulo;
 }
 
@@ -54,8 +75,39 @@ void Venda::setValor(float valor){
 }
 
 /*Retorna o tipo de do título do tesouro direto do objeto atual em string*/
-string tipoTituloEmString() {
-	return "";
+string Venda::tipoTituloEmString() {
+	switch (tipoTitulo) {
+	case PREFIXADO:
+		return PREFIXADO_STRING;
+	case IGPM:
+		return IGPM_STRING;
+	case SELIC:
+		return SELIC_STRING;
+	case IPCA:
+		return IPCA_STRING;
+	case IPCA_JUROS:
+		return IPCA_JUROS_STRING;
+	case PREFIXADO_JUROS:
+		return PREFIXADO_JUROS_STRING;
+	}
+
+	return "Outro";
+}
+
+int Venda::tipoTituloEmInteiro(string tipoTitulo){
+	if (tipoTitulo == IGPM_STRING)
+		return IGPM;
+	if (tipoTitulo == SELIC_STRING)
+		return SELIC;
+	if (tipoTitulo == PREFIXADO_STRING)
+		return PREFIXADO;
+	if (tipoTitulo == PREFIXADO_JUROS_STRING)
+		return PREFIXADO_JUROS;
+	if (tipoTitulo == IPCA_STRING)
+		return IPCA;
+	if (tipoTitulo == IPCA_JUROS_STRING)
+		return IPCA_JUROS;
+	return -1;
 }
 
 /*Converte os atributos de um objeto Venda em uma string formatada*/
@@ -79,14 +131,14 @@ Venda Venda::parseVenda(string atributos){
 		Venda venda;
 
 		if (atributos.empty())
-			return false;
+			return Venda();
 
 		istringstream iss(atributos);
 
 		while (getline(iss, token, separador)) {
 
 			switch (contador) {
-			case 1: venda.setTipoTitulo(token); break;
+			case 1: venda.setTipoTitulo(venda.tipoTituloEmInteiro(token)); break;
 			case 2: venda.setVencimentoTitulo(token); break;
 			case 3: venda.setDataVenda(token); break;
 			case 4: venda.setPrecoUnitario(stof(EntradaESaida::formatarSeparadorNumero(token))); break;
@@ -100,53 +152,6 @@ Venda Venda::parseVenda(string atributos){
 		}
 
 		return venda;
-}
-	
-
-
-Venda::Venda(){
-	
-	tipoTitulo = "NULL";
-	dataVenda = "NULL";
-	vencimentoTitulo = "NULL";
-	precoUnitario = 0;
-	quantidade = 0;
-	valor = 0;
-}
-
-
-/*Construtor sobrecarregado que instancia um objeto venda com os parâmteros contidos dentro de uma string no formato do arquivo de vendas*/
-Venda::Venda(string atributos){
-	int contador = 1;
-	string token;
-	istringstream iss(atributos);
-	
-	while (getline(iss, token, ';')) {
-
-		switch (contador) {
-		case 1: setTipoTitulo(token); break;
-		case 2: setVencimentoTitulo(token); break;
-		case 3: setDataVenda(token); break;
-		case 4: setPrecoUnitario(EntradaESaida::stringParaFloat(token)); break;
-		case 5: setQuantidade(EntradaESaida::stringParaFloat(token)); break;
-		case 6: setValor(EntradaESaida::stringParaFloat(token)); break;
-		default: break;
-
-		}
-
-		contador++;
-	}
-	
-}
-
-Venda::Venda(string tipoTitulo, string dataVenda, string vencimentoTitulo,
-	float precoUnitario, float quantidade, float valor){
-	this->tipoTitulo = tipoTitulo;
-	this->dataVenda = dataVenda;
-	this->vencimentoTitulo = vencimentoTitulo;
-	this->precoUnitario = precoUnitario;
-	this->quantidade = quantidade;
-	this->valor = valor;
 }
 
 Venda::~Venda() {

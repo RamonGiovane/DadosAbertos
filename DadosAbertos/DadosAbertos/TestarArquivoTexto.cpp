@@ -4,7 +4,7 @@
 #include <vector>
 #include <clocale>
 #include "TestarArquivoTexto.h"
-#include "Dado.h"
+#include "DadosAbertos.h"
 #include "Venda.h"
 #include "Investidor.h"
 #include "ProgressBar.h"

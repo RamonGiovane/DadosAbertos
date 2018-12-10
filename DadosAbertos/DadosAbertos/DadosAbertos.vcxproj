@@ -150,8 +150,7 @@
   <ItemGroup>
     <ClCompile Include="ArquivoTexto.cpp" />
     <ClCompile Include="Console.cpp" />
-    <ClCompile Include="Dado.cpp" />
-    <ClCompile Include="Entrada.cpp" />
+    <ClCompile Include="DadosAbertos.cpp" />
     <ClCompile Include="EntradaESaida.cpp" />
     <ClCompile Include="Investidor.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
@@ -162,7 +161,7 @@
   <ItemGroup>
     <ClInclude Include="ArquivoTexto.h" />
     <ClInclude Include="Console.h" />
-    <ClInclude Include="Dado.h" />
+    <ClInclude Include="DadosAbertos.h" />
     <ClInclude Include="EntradaESaida.h" />
     <ClInclude Include="Investidor.h" />
     <ClInclude Include="ProgressBar.h" />

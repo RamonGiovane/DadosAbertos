@@ -1,6 +1,6 @@
 #pragma once
-#ifndef DADOS_ABERTO_H
-#define DADOS_ABERTO_H
+#ifndef DADOS_ABERTOS_H
+#define DADOS_ABERTOS_H
 #include <vector>
 #include <cstdlib>
 #include <string>
@@ -15,18 +15,26 @@ bool importarDados();
 
 class DadosAbertos {
 public:
-	enum TipoDeDado { VENDAS, INVESTIDOR};
+	enum TipoDeDado { VENDAS, INVESTIDORES};
 	
+	
+	bool adicionar(string atributos, int tipoDeDado);
+	int numeroDeImportacoes(int tipoDeDado);
+	bool importarDados(int tipoDeDado);
+	static bool organizarVendasPorData(vector<Venda> vetorVendas);
+	static bool comparadorVendas(const Venda & vendaA, const Venda & vendaB);
+
+	//bool organizarVendasPorData(vector<Venda> vetorVendas);
 
 private:
 	vector<Venda> vetorVendas;
 	vector<Investidor> vetorInvestidores;
 	const string VENDAS_PATH = "../../../VendasTesouroDireto.csv";
-	const string INVESTIDORES_PATH = "../../../VendasTesouroDireto.csv";
-	bool abrirArquivo(ArquivoTexto & arquivo, const string nomeArquivo);
-	bool adicionar(string atributos, int tipoDeDado);
+	const string INVESTIDORES_PATH = "../../../InvestidoresTesouroDireto - Cópia.csv";
 	bool separarLinhas(string leitura, int tipoDeDado);
-	bool importarDados(int tipoDeDado);
+	bool abrirArquivo(ArquivoTexto & arquivo, const string nomeArquivo);
+	
+	
 
 };
 
@@ -44,5 +52,5 @@ inline void pauseAndClear() {
 }
 
 
-#endif // !DADOS_ABERTO_H
+#endif // !DADOS_ABERTOS_H
 

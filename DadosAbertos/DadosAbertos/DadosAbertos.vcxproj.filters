@@ -36,13 +36,10 @@
     <ClCompile Include="ProgressBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Dado.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entrada.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="EntradaESaida.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DadosAbertos.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,10 +62,10 @@
     <ClInclude Include="ProgressBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Dado.h">
+    <ClInclude Include="EntradaESaida.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EntradaESaida.h">
+    <ClInclude Include="DadosAbertos.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
