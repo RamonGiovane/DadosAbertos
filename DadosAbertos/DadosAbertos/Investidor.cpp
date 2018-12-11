@@ -8,7 +8,7 @@ Investidor::Investidor() {
 	codigoInvestidor = "NULL";
 	idade = 0;
 	
-	estadoCivil = "NULL", profissao = "NULL",
+	estadoCivil = 0, profissao = "NULL",
 		cidadeInvestidor = "NULL", paisInvestidor = "NULL";
 	genero = '?';
 	
@@ -16,7 +16,7 @@ Investidor::Investidor() {
 }
 
 /*Construtor sobrecarregado com onde todos os atributos de um Investidor podem ser passados por prâmetro*/
-Investidor::Investidor(string codigoInvestidor, int idade, string dataAdesao, string estadoCivil,
+Investidor::Investidor(string codigoInvestidor, int idade, string dataAdesao, int estadoCivil,
 		string profissao, string cidadeInvestidor, string UFInvestidor, string paisInvestidor,
 		string situacaoConta, char genero, bool operacaoRecente) {
 	
@@ -59,6 +59,42 @@ string Investidor::getSituacaoConta() {
 	return situacaoConta;
 }
 
+string Investidor::obterGenero(char genero) {
+	if (genero == 'M')
+		return "Masculino";
+	if (genero == 'F')
+		return "Feminino";
+	return "Indefinido";
+}
+
+string Investidor::obterEstadoCivil(int estadoCivil){
+	Investidor investidor;
+	switch (estadoCivil) {
+	case SOLTEIRO:
+		return investidor.SOLTEIRO_STRING;
+	case DESQUITADO:
+		return investidor.DESQUITADO_STRING;
+	case VIUVO:
+		return investidor.VIUVO_STRING;
+	case DIVORCIADO:
+		return investidor.DIVORCIADO_STRING;
+	case CASADO_BRASILEIRO:
+		return investidor.CASADO_BRASILEIRO_STRING;
+	case CASADO_NATURALIZADO:
+		return investidor.CASADO_NATURALIZADO_STRING;
+	case CASADO_ESTRANGEIRO:
+		return investidor.CASADO_ESTRANGEIRO_STRING;
+	case UNIAO_ESTAVEL:
+		return investidor.UNIAO_ESTAVEL_STRING;
+	case SEPARADO:
+		return investidor.SEPARADO_STRING;
+	case NAO_SE_APLICA:
+		return investidor.NAO_SE_APLICA_STRING;
+	}
+	return "";
+		
+}
+
 void Investidor::setOperacaoRecente(bool operacaoRecente) {
 	this->operacaoRecente = operacaoRecente;
 }
@@ -76,7 +112,7 @@ void Investidor::setDataAdesao(string dataAdesao) {
 	this->dataAdesao = dataAdesao;
 }
 
-void Investidor::setEstadoCivil(string estadoCivil){
+void Investidor::setEstadoCivil(int estadoCivil){
 	this->estadoCivil = estadoCivil;
 }
 
@@ -120,16 +156,37 @@ string Investidor::getPaisInvestidor(){
 	return paisInvestidor;
 }
 
+int Investidor::getEstadoCivil(){
+	return estadoCivil;
+}
+
+/*Retorna o nome da região do Brasil na qual o estado do investidor pertence*/
+string Investidor::obterRegiao() {
+	if (UFInvestidor == "MG" || UFInvestidor == "RJ" || UFInvestidor == "SP" || UFInvestidor == "ES")
+		return "Sudeste";
+
+	if (UFInvestidor == "RS" || UFInvestidor == "PR" || UFInvestidor == "SC")
+		return "Sul";
+
+	if (UFInvestidor == "DF" || UFInvestidor == "GO" || UFInvestidor == "MT" || UFInvestidor == "MS")
+		return "Centro-Oeste";
+
+	if (UFInvestidor == "AM" || UFInvestidor == "AP" || UFInvestidor == "AC" || UFInvestidor == "RO" ||
+		UFInvestidor == "RR" || UFInvestidor == "PA" || UFInvestidor == "TO")
+		return "Norte";
+
+	if (UFInvestidor == "MA" || UFInvestidor == "PI" || UFInvestidor == "BA" || UFInvestidor == "CE" ||
+		UFInvestidor == "PE" || UFInvestidor == "RN" || UFInvestidor == "PB" || UFInvestidor == "SE" ||
+		UFInvestidor == "AL")
+		return "Nordeste";
+
+	return "";
+}
+
+
 string Investidor::toString(){
 	char texto[250];
-	string genero, operacaoRecente;
-	
-	if (this->genero == 'M')
-		genero = "Masculino";
-	else if (this->genero == 'F')
-		genero = "Feminino";
-	else
-		genero = "Indefinido";
+	string operacaoRecente;
 
 	if (this->operacaoRecente)
 		operacaoRecente = "Sim";
@@ -139,9 +196,33 @@ string Investidor::toString(){
 
 	sprintf_s(texto, 250, "Código %s\tData de Adesão: %s\nIdade: %d\tEstado Civil: %s\nCidade: %s\tPaís: %s\n\
 					Profissão: %s\nGênero: %s, Operou nos Últimos 12 Meses? %s ", 
-			codigoInvestidor.c_str(), dataAdesao.c_str(), idade, estadoCivil.c_str(), cidadeInvestidor.c_str(),
-		paisInvestidor.c_str(), profissao.c_str(), genero.c_str(), operacaoRecente.c_str());
+			codigoInvestidor.c_str(), dataAdesao.c_str(), idade, obterEstadoCivil(estadoCivil).c_str(),
+		cidadeInvestidor.c_str(), paisInvestidor.c_str(), profissao.c_str(), obterGenero(genero).c_str(), operacaoRecente.c_str());
 	return texto;
+}
+
+int Investidor::estadoCivilEmInteiro(string estadoCivil) {
+	if(estadoCivil == SOLTEIRO_STRING)
+		return SOLTEIRO;
+	if (estadoCivil == DESQUITADO_STRING)
+		return DESQUITADO;
+	if (estadoCivil == DIVORCIADO_STRING)
+		return DIVORCIADO;
+	if (estadoCivil == VIUVO_STRING)
+		return VIUVO;
+	if (estadoCivil == CASADO_BRASILEIRO_STRING)
+		return CASADO_BRASILEIRO;
+	if (estadoCivil == CASADO_NATURALIZADO_STRING)
+		return CASADO_NATURALIZADO;
+	if (estadoCivil == CASADO_ESTRANGEIRO_STRING)
+		return CASADO_ESTRANGEIRO;
+	if (estadoCivil == UNIAO_ESTAVEL_STRING)
+		return UNIAO_ESTAVEL;
+	if (estadoCivil == SEPARADO_STRING)
+		return SEPARADO;
+	else
+		return NAO_SE_APLICA;
+
 }
 
 /*Separa os atributos(dados) de um investidor do tesouro direto formatados em uma string e separados por ponto e vírgula (";"),
@@ -163,7 +244,7 @@ Investidor Investidor::parseInvestidor(string atributos){
 			switch (contador) {
 			case 1: investidor.setCodigoInvestidor(token); break;
 			case 2: investidor.setDataAdesao(token); break;
-			case 3: investidor.setEstadoCivil(token); break;
+			case 3: investidor.setEstadoCivil(investidor.estadoCivilEmInteiro(token)); break;
 			case 4: investidor.setGenero(token.c_str()[0]); break;
 			case 5: investidor.setProfissao(token); break;
 			case 6: investidor.setIdade(EntradaESaida::stringParaInt(token)); break;

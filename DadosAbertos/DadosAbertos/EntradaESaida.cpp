@@ -42,7 +42,7 @@ void EntradaESaida::exibirImportacao() {
 }
 
 void EntradaESaida::exibirTitulo(string titulo) {
-	cout << "\t=== " << titulo << " ===";
+	cout << "\t=== " << titulo << " ===\n";
 }
 
 /*Exibe as opções do menu de pesquisa*/
