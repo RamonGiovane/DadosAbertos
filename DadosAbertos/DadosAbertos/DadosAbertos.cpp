@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <iomanip>
 #include <ctime>
 #include "Venda.h"
 #include "DadosAbertos.h"
@@ -31,35 +32,54 @@ bool DadosAbertos::abrirArquivo(ArquivoTexto & arquivo, const string nomeArquivo
 	sort(vetorVendas.begin(), vetorVendas.end(), DadosAbertos::comparadorVendas);
 }*/
 
+/*Procura a relação de títulos do tesouro direto nos dados importados, entre o período <data1>  e <data2>, 
+exibindo a quantidade e o valor total de cada tipo.
+Retorna true caso alguma data seja encontrada, false do contrário*/
 bool DadosAbertos::relacaoDeTitulos(string data1, string data2) {
-	
-	int i = 0;
+	bool achou = false;
+	unsigned int i = 0;
 	if (vetorVendas.empty())
 		return false;
 
 	//Percorre o vector até encontrar registros com as posições com o limite inferior da pesquisa (data1)
-	while (EntradaESaida::compararDatas(vetorVendas[i].getDataVenda(), data1) < 0)
+	while (i < vetorVendas.size()-1 &&
+		EntradaESaida::compararDatas(data1, vetorVendas[i].getDataVenda()) > 0) {
 		i++;
-	//Vetores de 6 posições que conterão o somátorio dos dados de cada um dos 6 tipos de título
-	float quantidade[6], valorTotal[6];
+	}
+
 	
+	//Se i equivaler ao tamanho do vector, significa que não achou a data inicial
+	if (i == vetorVendas.size()-1)
+		return false;
+
+
+	//Vetores de 6 posições que conterão o somátorio dos dados de cada um dos 6 tipos de título
+	double quantidade[6] = { 0, 0, 0, 0, 0 ,0 },
+		valorTotal[6] = { 0, 0, 0, 0, 0 ,0 };
+
 	//Percorre o vector enquanto as datas sendo processandas não ultrapassem o limite superior da pesquisa (data2)
-	for (; EntradaESaida::compararDatas(vetorVendas[i].getDataVenda(), data2) <= 0 &&
-		i < (static_cast<int>(vetorVendas.size())); i++) {
-		
+	for (; i < vetorVendas.size() && EntradaESaida::compararDatas(vetorVendas[i].getDataVenda(), data2) <= 0; i++) {
+
 		/*Armazena o somatório de quantidades dentro vetor. Cada título é representado
 		por um número de 1 a 6, e as posições do vetor de 0 a 5, subtrai-se 1 
 		para armazenar o somatório de um tipo de título em sua devida posição*/
 		quantidade[vetorVendas[i].getTipoTitulo() - 1] += vetorVendas[i].getQuantidade();
 		valorTotal[vetorVendas[i].getTipoTitulo() - 1] += vetorVendas[i].getValor();
 
+		achou = true;
+
 	}
 
+	if (!achou) return false;
+
 	//Agora exibe ao usuário os somatórios dos dados de cada título
+	char saida[200];
 	for (int i = 0; i < 6; i++) {
-		cout << i+1 << " - " << Venda::obterTipoTituloEmString(i + 1);
-		cout << "\n\tQuantidade total: " << quantidade[i];
-		cout << "\n\tValor total: " << valorTotal[i] << endl;
+		cout << i+1 << " - " << Venda::obterTipoTituloEmString(i + 1);	
+		sprintf_s(saida, 200, "\n\tQuantidade total: %.2f", quantidade[i]);
+		cout << saida;
+		sprintf_s(saida, 200, "\n\tValor total: R$ %.2f\n", valorTotal[i]);
+		cout << saida << endl;
 	}
 
 	return true;
@@ -249,24 +269,33 @@ void pesquisarTipoTitulo(DadosAbertos & dados) {
 
 void menuImportacao(DadosAbertos & dados) {
 	EntradaESaida::exibirImportacao();
-	getchar();
+	EntradaESaida::pausarLimparTela();
 	dados.importarDados(DadosAbertos::VENDAS);
 	//dados.importarDados(DadosAbertos::INVESTIDORES);
 
 
 }
 
-void relacaoDeTitulos(DadosAbertos & dados) {
-	string data1, data2;
-	
+bool lerDatas(string & data1, string & data2) {
 	cout << "\nDefina um intervalo de datas:";
 	data1 = lerData("\nData incial (DD/MM/AAAA):");
-	if (data1 == "") return;
+	if (data1 == "") return false;
 
 	data2 = lerData("\nData final (DD/MM/AAAA):");
-	if (data2 == "") return;
+	if (data2 == "") return false;
+	cout << endl;
+	return true;
+}
 
+void relacaoDeTitulos(DadosAbertos & dados) {
+	EntradaESaida::limparTela();
+	string data1, data2;
+	if (!lerDatas(data1, data2)) {
+		cout << "\nOperação cancelada";
+		return;
+	}
 	dados.relacaoDeTitulos(data1, data2);
+	
 }
 
 void menuRelatorio(DadosAbertos & dados) {
@@ -274,9 +303,11 @@ void menuRelatorio(DadosAbertos & dados) {
 	do {
 		EntradaESaida::exibirMenuRelatorio();
 		cin >> opcao;
+		EntradaESaida::limparTela();
 		switch (opcao) {
 		case 1: relacaoDeTitulos(dados); break;
 		}
+		EntradaESaida::pausarLimparTela();
 	} while (opcao != 5);
 	
 }
@@ -286,10 +317,12 @@ void menuPesquisar(DadosAbertos & dados) {
 	do {
 		EntradaESaida::exibirMenuPesquisar();
 		cin >> opcao;
+		EntradaESaida::limparTela();
 		switch (opcao) {
 		case 1: pesquisarNumeroDeVendas(dados); break;
 		case 2: pesquisarTipoTitulo(dados); break;
 		}
+		EntradaESaida::pausarLimparTela();
 	} while (opcao != 3);
 }
 
@@ -300,11 +333,13 @@ void menu(DadosAbertos & dados) {
 	do {
 		EntradaESaida::exibirMenu();
 		cin >> opcao;
+		EntradaESaida::limparTela();
 		switch (opcao) {
 		case 1: menuImportacao(dados); break;
 		case 2: menuPesquisar(dados); break;
 		case 3: menuRelatorio(dados); break;
 		}
+		EntradaESaida::limparTela();
 	} while (opcao != 4);
 
 }

@@ -17,7 +17,7 @@ Venda::Venda() {
 }
 
 Venda::Venda(int tipoTitulo, string dataVenda, string vencimentoTitulo,
-	float precoUnitario, float quantidade, float valor) {
+	double precoUnitario, double quantidade, double valor) {
 	this->tipoTitulo = tipoTitulo;
 	this->dataVenda = dataVenda;
 	this->vencimentoTitulo = vencimentoTitulo;
@@ -38,15 +38,15 @@ string Venda::getVencimentoTitulo(){
 	return vencimentoTitulo;
 }
 
-float Venda::getPrecoUnitario(){
+double Venda::getPrecoUnitario(){
 	return precoUnitario;
 }
 
-float Venda::getQuantidade(){
+double Venda::getQuantidade(){
 	return quantidade;
 }
 
-float Venda::getValor(){
+double Venda::getValor(){
 	return valor;
 }
 
@@ -62,15 +62,15 @@ void Venda::setVencimentoTitulo(string vencimentoTitulo){
 	this->vencimentoTitulo = vencimentoTitulo;
 }
 
-void Venda::setQuantidade(float quantidade){
+void Venda::setQuantidade(double quantidade){
 	this->quantidade = quantidade;
 }
 
-void Venda::setPrecoUnitario(float precoUnitario){
+void Venda::setPrecoUnitario(double precoUnitario){
 	this->precoUnitario = precoUnitario;
 }
 
-void Venda::setValor(float valor){
+void Venda::setValor(double valor){
 	this->valor = valor;
 }
 
@@ -171,9 +171,9 @@ Venda Venda::parseVenda(string atributos){
 			case 1: venda.setTipoTitulo(venda.tipoTituloEmInteiro(token)); break;
 			case 2: venda.setVencimentoTitulo(token); break;
 			case 3: venda.setDataVenda(token); break;
-			case 4: venda.setPrecoUnitario(stof(EntradaESaida::formatarSeparadorNumero(token))); break;
-			case 5: venda.setQuantidade(stof(EntradaESaida::formatarSeparadorNumero(token))); break;
-			case 6: venda.setValor(stof(EntradaESaida::formatarSeparadorNumero(token))); break;
+			case 4: venda.setPrecoUnitario(stod(EntradaESaida::formatarSeparadorNumero(token))); break;
+			case 5: venda.setQuantidade(stod(EntradaESaida::formatarSeparadorNumero(token))); break;
+			case 6: venda.setValor(stod(EntradaESaida::formatarSeparadorNumero(token))); break;
 			default: break;
 
 			}

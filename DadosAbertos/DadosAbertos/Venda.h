@@ -8,16 +8,16 @@ public:
 	int getTipoTitulo();
 	string getDataVenda();
 	string getVencimentoTitulo();
-	float getPrecoUnitario();
-	float getQuantidade();
-	float getValor();
+	double getPrecoUnitario();
+	double getQuantidade();
+	double getValor();
 
 	void setTipoTitulo(int tipoTitulo);
 	void setDataVenda(string dataVenda);
 	void setVencimentoTitulo(string vencimentoTitulo);
-	void setQuantidade(float quantidade);
-	void setPrecoUnitario(float precoUnitario);
-	void setValor(float valor);
+	void setQuantidade(double quantidade);
+	void setPrecoUnitario(double precoUnitario);
+	void setValor(double valor);
 
 	string tipoTituloEmString();
 	static string obterTipoTituloEmString(int tipoTitulo);
@@ -40,13 +40,13 @@ public:
 	
 	Venda();
 	Venda(int tipoTitulo, string dataVenda, string vencimentoTitulo, 
-		float precoUnitario, float quantidade, float valor);
+		double precoUnitario, double quantidade, double valor);
 	~Venda();
 
 private:
 	int tipoTitulo;
 	string dataVenda, vencimentoTitulo;
-	float precoUnitario, quantidade, valor;
+	double precoUnitario, quantidade, valor;
 
 };
 

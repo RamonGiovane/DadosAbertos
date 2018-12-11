@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <conio.h>
 #include "Venda.h"
 using namespace std;
 /*Remove o uso de pontos (.) para representar números na casa de milhar em números de
@@ -15,19 +16,14 @@ string EntradaESaida::formatarSeparadorNumero(string numero) {
 	return numero;
 }
 
-/*Retorna um número do tipo float convertido de string a partir do parâmetro <str>*/
-float EntradaESaida::stringParaFloat(string str) {
-	return stof(EntradaESaida::formatarSeparadorNumero(str));
-}
-
-/*Retorna um número do tipo float convertido de string a partir do parâmetro <str>*/
-int EntradaESaida::stringParaInt(string str) {
-	return stoi(EntradaESaida::formatarSeparadorNumero(str));
-}
-
 /*Retorna um número do tipo double convertido de string a partir do parâmetro <str>*/
 double EntradaESaida::stringParaDouble(string str) {
 	return stod(EntradaESaida::formatarSeparadorNumero(str));
+}
+
+/*Retorna um número do tipo double convertido de string a partir do parâmetro <str>*/
+int EntradaESaida::stringParaInt(string str) {
+	return stoi(EntradaESaida::formatarSeparadorNumero(str));
 }
 
 /*Exibe uma mensagem de erro quando é impossível abrir um arquivo*/
@@ -45,9 +41,13 @@ void EntradaESaida::exibirImportacao() {
 
 }
 
+void EntradaESaida::exibirTitulo(string titulo) {
+	cout << "\t=== " << titulo << " ===";
+}
 
 /*Exibe as opções do menu de pesquisa*/
 void EntradaESaida::exibirMenuPesquisar() {
+	exibirTitulo("Pesquisar Dados");
 	cout << "\n1 - Número de Venda\n"\
 		"2 - Tipo de Título\n"\
 		"3 - Voltar\n"\
@@ -58,6 +58,7 @@ void EntradaESaida::exibirMenuPesquisar() {
 
 /*Exibe as opções do menu de pesquisa*/
 void EntradaESaida::exibirMenuRelatorio() {
+	exibirTitulo("Relatórios");
 	cout << "\n1 - Relação de Títulos\n"\
 		"2 - Investidores por Estado Civil\n"\
 		"3 - Investidores por Gênero\n"\
@@ -69,7 +70,9 @@ void EntradaESaida::exibirMenuRelatorio() {
 
 /*Exibe um menu com as possíveis operações do programa*/
 void EntradaESaida::exibirMenu() {
-	cout << "\n1 - Importar Arquivos\n"\
+	exibirTitulo("Dados Abertos");
+	cout << 
+		"\n1 - Importar Arquivos\n"\
 		"2 - Pesquisar no Tesouro Direto\n"\
 		"3 - Exibir Relatórios\n"\
 		"4 - Sair\n"\
@@ -81,10 +84,10 @@ void EntradaESaida::limparTela() {
 }
 
 /*Limpa a tela do console*/
-void EntradaESaida::pausarTela() {
-	int dummy;
-	cout << "\nPressione ENTER para continuar...";
-	cin >> dummy;
+void EntradaESaida::pausarTela() {	
+	cout << "\nPressione qualquer tecla para continuar...";
+	_getch();
+	
 }
 
 void EntradaESaida::pausarLimparTela() {

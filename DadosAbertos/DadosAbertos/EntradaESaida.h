@@ -12,7 +12,6 @@ class EntradaESaida
 {
 public:
 	static string formatarSeparadorNumero(string numero);
-	static float stringParaFloat(string str);
 	static int stringParaInt(string str);
 	static double stringParaDouble(string str);
 	static void exibirFalhaDeImportacao(const char * tipoDeArquivo);
@@ -29,16 +28,14 @@ public:
 	static bool dataEmInteiros(string data, int & dia, int & mes, int & ano);
 	static bool validarData(string data);
 	static bool validarData(int dia, int mes, int ano);
-	static bool comparadorVendas(const Venda & v1, const Venda & v2);
 	static bool lerData(string & data);
 	static void exibirMenuPesquisar();
 	static void exibirMenuRelatorio();
-
+	static void exibirTitulo(string titulo);
 private:
 };
 
 
 #endif // ! ENTRADA_E_SAIDA_H
-
 
 
