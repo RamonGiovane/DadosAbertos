@@ -94,6 +94,36 @@ string Venda::tipoTituloEmString() {
 	return "Outro";
 }
 
+string Venda::obterTipoTituloEmString(int tipoTitulo) {
+	Venda v;
+	switch (tipoTitulo) {
+	case PREFIXADO:
+		return v.PREFIXADO_STRING;
+	case IGPM:
+		return v.IGPM_STRING;
+	case SELIC:
+		return v.SELIC_STRING;
+	case IPCA:
+		return v.IPCA_STRING;
+	case IPCA_JUROS:
+		return v.IPCA_JUROS_STRING;
+	case PREFIXADO_JUROS:
+		return v.PREFIXADO_JUROS_STRING;
+	}
+
+	return "Outro";
+}
+
+/*Retorna uma string com dados apenas dados de pesquisa. 
+Recebe como parâmtero <tipoTitulo>, variável booleana que define se o tipo do título do tesouro direto será
+omitido ou não*/
+string Venda::obterDadosPesquisa(bool tipoTitulo) {
+	char dados[300];
+	sprintf_s(dados, 300, "\nData de Vencimento: %s\nQuantidade: %.2f\nValor total: %.2f\n",
+		vencimentoTitulo.c_str(), quantidade, valor);
+	return (tipoTitulo) ? "\nTipo de Título: " + tipoTituloEmString() + dados : dados;
+}
+
 int Venda::tipoTituloEmInteiro(string tipoTitulo){
 	if (tipoTitulo == IGPM_STRING)
 		return IGPM;

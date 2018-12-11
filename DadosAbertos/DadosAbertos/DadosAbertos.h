@@ -18,11 +18,19 @@ public:
 	enum TipoDeDado { VENDAS, INVESTIDORES};
 	
 	
+	bool pesquisarTiposTitulo(string data);
+
+	bool relacaoDeTitulos(string data1, string data2);
+
+	bool pesquisarTiposTitulo(int tipoTitulo, string data);
+
+	bool pesquisarNumeroVendas(string data);
 	bool adicionar(string atributos, int tipoDeDado);
 	int numeroDeImportacoes(int tipoDeDado);
 	bool importarDados(int tipoDeDado);
-	static bool organizarVendasPorData(vector<Venda> vetorVendas);
-	static bool comparadorVendas(const Venda & vendaA, const Venda & vendaB);
+
+//	static bool organizarVendasPorData(vector<Venda> vetorVendas);
+//	static bool comparadorVendas(Venda & vendaA, Venda & vendaB);
 
 	//bool organizarVendasPorData(vector<Venda> vetorVendas);
 
@@ -32,6 +40,7 @@ private:
 	const string VENDAS_PATH = "../../../VendasTesouroDireto.csv";
 	const string INVESTIDORES_PATH = "../../../InvestidoresTesouroDireto - Cópia.csv";
 	bool separarLinhas(string leitura, int tipoDeDado);
+	static void exibirTiposDeTitulo();
 	bool abrirArquivo(ArquivoTexto & arquivo, const string nomeArquivo);
 	
 	

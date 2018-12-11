@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <algorithm>
+#include "Venda.h"
 
 using namespace std;
 class EntradaESaida
@@ -13,9 +14,14 @@ public:
 	static string formatarSeparadorNumero(string numero);
 	static float stringParaFloat(string str);
 	static int stringParaInt(string str);
+	static double stringParaDouble(string str);
 	static void exibirFalhaDeImportacao(const char * tipoDeArquivo);
 	static void exibirImportacao();
 	static void exibirMenu();
+	static void limparTela();
+	static void pausarTela();
+	static void pausarLimparTela();
+	static void exibirSeparador();
 	static int lerInteiro();
 	static string lerString();
 	static int compararDatas(const char * dataA, const char * dataB);
@@ -23,6 +29,7 @@ public:
 	static bool dataEmInteiros(string data, int & dia, int & mes, int & ano);
 	static bool validarData(string data);
 	static bool validarData(int dia, int mes, int ano);
+	static bool comparadorVendas(const Venda & v1, const Venda & v2);
 	static bool lerData(string & data);
 	static void exibirMenuPesquisar();
 	static void exibirMenuRelatorio();

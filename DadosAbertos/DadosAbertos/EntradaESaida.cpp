@@ -1,8 +1,10 @@
 #include "EntradaESaida.h"
 #include <iostream>
 #include <sstream>
-/*
-Remove o uso de pontos (.) para representar números na casa de milhar em números de
+#include <vector>
+#include "Venda.h"
+using namespace std;
+/*Remove o uso de pontos (.) para representar números na casa de milhar em números de
 ponto flutuante dentro de uma string.
 Exemplo de entrada: 1.000,00 -> exemplo de saída: 1000,00
 Retorna uma string com o novo número formatado
@@ -23,6 +25,10 @@ int EntradaESaida::stringParaInt(string str) {
 	return stoi(EntradaESaida::formatarSeparadorNumero(str));
 }
 
+/*Retorna um número do tipo double convertido de string a partir do parâmetro <str>*/
+double EntradaESaida::stringParaDouble(string str) {
+	return stod(EntradaESaida::formatarSeparadorNumero(str));
+}
 
 /*Exibe uma mensagem de erro quando é impossível abrir um arquivo*/
 void EntradaESaida::exibirFalhaDeImportacao(const char* caminhoDoArquivo) {
@@ -69,6 +75,27 @@ void EntradaESaida::exibirMenu() {
 		"4 - Sair\n"\
 		"\nEscolha: ";
 }
+/*Limpa a tela do console*/
+void EntradaESaida::limparTela() {
+	system("cls");
+}
+
+/*Limpa a tela do console*/
+void EntradaESaida::pausarTela() {
+	int dummy;
+	cout << "\nPressione ENTER para continuar...";
+	cin >> dummy;
+}
+
+void EntradaESaida::pausarLimparTela() {
+	pausarTela();
+	limparTela();
+}
+
+/*Exibe uma divisória como  um conjunto de traços na tela*/
+void EntradaESaida::exibirSeparador() {
+	cout << "\n-----------------------------\n";
+}
 
 /*Lê e retorna um número inteiro fornecido pelo teclado*/
 int EntradaESaida::lerInteiro() {
@@ -79,7 +106,7 @@ int EntradaESaida::lerInteiro() {
 /*Lê e retorna uma string fornecida pelo teclado*/
 string EntradaESaida::lerString() {
 	string str;
-	while (str != "")
+	while (str == "")
 		getline(cin, str);
 	return str;
 }
@@ -88,6 +115,7 @@ string EntradaESaida::lerString() {
 uma referência para string que conterá a data a ser lida*/
 bool EntradaESaida::lerData(string &data) {
 	data = lerString();
+
 	return(validarData(data));
 
 }
@@ -138,13 +166,15 @@ bool EntradaESaida::dataEmInteiros(string data, int & dia, int & mes, int & ano)
 	int contador = 1;
 	string token;
 	istringstream iss(data);
-	while (getline(iss, token, '/'))
+	while (getline(iss, token, '/')) {
 		switch (contador) {
 		case 1: dia = atoi(token.c_str()); break;
 		case 2: mes = atoi(token.c_str()); break;
 		case 3: ano = atoi(token.c_str()); break;
 		default: return false;
 		}
+		contador++;
+	}
 	return true;
 }
 
@@ -166,7 +196,7 @@ valores válidos, retorna true, do contrário, false*/
 bool EntradaESaida::validarData(int dia, int mes, int ano){
 	
 	//Verifica inicalmente se os valores inteiros, dia, mes e ano são válidos
-	if ((dia >= 1 && dia <= 31) && (mes >= 1 && mes <= 12) && (ano >= 1900 && ano <= 2100)) {
+	if ((dia >= 1 && dia <= 31) && (mes >= 1 && mes <= 12) && (ano >= 1900 && ano <= 2200)) {
 		//Verifica se o ano é bissexto
 		if ((dia == 29 && mes == 2) && ((ano % 4) == 0)) {
 			return true;
@@ -191,7 +221,5 @@ bool EntradaESaida::validarData(int dia, int mes, int ano){
 	else
 		return false;
 }
-
-
 
 
