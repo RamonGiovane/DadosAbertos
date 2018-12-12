@@ -154,8 +154,7 @@
     <ClCompile Include="EntradaESaida.cpp" />
     <ClCompile Include="Investidor.cpp" />
     <ClCompile Include="ProgressBar.cpp" />
-    <ClCompile Include="ProgressBarTest.cpp" />
-    <ClCompile Include="TestarArquivoTexto.cpp" />
+    <ClCompile Include="PesquisadorDadosAbertos.cpp" />
     <ClCompile Include="Venda.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -165,7 +164,7 @@
     <ClInclude Include="EntradaESaida.h" />
     <ClInclude Include="Investidor.h" />
     <ClInclude Include="ProgressBar.h" />
-    <ClInclude Include="TestarArquivoTexto.h" />
+    <ClInclude Include="PesquisadorDadosAbertos.h" />
     <ClInclude Include="Venda.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

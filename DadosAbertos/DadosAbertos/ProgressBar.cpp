@@ -1,70 +1,82 @@
 #include "ProgressBar.h"
 
-ProgressBar::ProgressBar(int tamanhoX, int tamanhoY, unsigned int fragmentos){
-	this->tamanhoX = tamanhoX;
-	this->tamanhoY = tamanhoY;
-	this->fragmentos = fragmentos;
+ProgressBar::ProgressBar(int x, int y, unsigned int comprimento){
+	this->x = x;
+	this->y = y;
+	this->comprimento = comprimento;
+	porcentagemAtual = 0;
+	desenhado = false;
 }
 
 void ProgressBar::setTamanhoX(int tamanhoX){
-	this->tamanhoX = tamanhoX;
+	this->x = tamanhoX;
 }
 
 void ProgressBar::setTamanhoY(int tamanhoY){
-	this->tamanhoY = tamanhoY;
+	this->y = tamanhoY;
 }
 
 int ProgressBar::getTamanhoX(){
-	return tamanhoX;
+	return x;
 }
 
 int ProgressBar::getTamanhoY(){
-	return tamanhoY;
+	return y;
 }
 
 ProgressBar::~ProgressBar(){
 }
 
-void ProgressBar::show(int x, int y, unsigned int porcentagem){
-	Console console = obterConsole();
-	char bordaSuperiorEsquerda = char(0xDA), bordaSuperiorDireita = char(0xBF);
-	char bordaInferiorEsquerda = char(0xC0), bordaInferiorDireita = char(0xD9);
-	char coluna = char(0XB3), linha = char(0xC4);
-	console.setCodePage(850);
+bool ProgressBar::draw(){
+	unsigned int i;
 	
-	//Desenhando o medidor da barra
-	console.gotoxy(x, y);
-	cout << bordaSuperiorEsquerda;
-	for (int j = 1; j <= tamanhoX-1; j++)
-			cout << linha;
-	cout << bordaSuperiorDireita;
-	console.gotoxy(x, y+1); 
-	for (int j = 0; j < tamanhoY; j++) {
-		cout << coluna;
+	Console::gotoxy(x, y);
+	cout << CSE;
+	//cout << comprimento;
+	for (i = x-8; i <= comprimento-1; i++)
+		cout << LIN;
+	cout << CSD;
+	
+	Console::gotoxy(x, y+1);
+	cout << COL;
+	Console::gotoxy(x, y + 2);
+	cout << CIE;
+	for (i = x-8; i <= comprimento -1; i++)
+		cout << LIN;
+	cout << CID;
+	
+	Console::gotoxy(comprimento+9, y + 1);
+	cout << COL;
+	desenhado = true;
+	return true;
+}
 
-		//Posicionando à direita da tela
-		console.gotoxy(tamanhoX + x, y + j + 1);
-		cout << coluna;
-		
-		//Posicionando à esquerda da tela de novo
-		console.gotoxy(x, y + j + 1);
+void ProgressBar::show(int porcentagem) {
+	//Console::setCodePage(850);
+	setlocale(LC_ALL, ".850");
+	int pos =  porcentagem * comprimento / 100;
+	if(desenhado == false)
+		draw();
+
+	/*if (pos == 100) {
+		Console::gotoxy(comprimento / 2 + 10, y + 1);
+		cout << porcentagem << "%"; return;
+	}*/
+
+	if (porcentagem <= porcentagemAtual) {
+		Console::setCodePage(1252);
+		return;
 	}
-	cout << bordaInferiorEsquerda;
-	for (int j = 1; j <= tamanhoX-1; j++)
-		cout << linha;
-	cout << bordaInferiorDireita << endl;
 
-	//console.setCodePage(1252);
+	Console::setCodePage(850);
+	Console::gotoxy(x+pos, y+1);
+	cout <<	BLOCO;
 
-	console.gotoxy(tamanhoX/2, tamanhoY);
-	console.textColor(Background::CYAN, Foreground::WHITE);
-	cout << "100%";
-	char progresso = char(0xDB);
-	console.textColor(Background::CYAN,Foreground::RED);
-	console.gotoxy(x+1, y+1);
-	for (int j = 1; j < tamanhoX; j++)
-		cout << "";
-	cout << endl << endl << endl;
+	Console::gotoxy(comprimento/2 + 10, y+1);
+	cout << porcentagem + 2 << "%";
+	porcentagemAtual = pos;
+
+	
 }
 
 Console ProgressBar::obterConsole(){

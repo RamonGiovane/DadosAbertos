@@ -32,11 +32,10 @@ public:
 private:
 	vector<Venda> vetorVendas;
 	vector<Investidor> vetorInvestidores;
-	const string VENDAS_PATH = "../../../VendasTesouroDireto.csv";
-	const string INVESTIDORES_PATH = "../../../InvestidoresTesouroDireto.csv";
+	const string VENDAS_PATH = "VendasTesouroDireto.csv";
+	const string INVESTIDORES_PATH = "InvestidoresTesouroDireto.csv";
 	bool separarLinhas(string leitura, int tipoDeDado);
 	bool abrirArquivo(ArquivoTexto & arquivo, const string nomeArquivo);
-	
 	
 
 };

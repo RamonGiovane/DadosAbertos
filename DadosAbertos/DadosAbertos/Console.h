@@ -18,7 +18,7 @@ public:
 		A coordenada de tela inicial é 0,0. */
 	static void gotoxy(int x, int y);
 
-	void setCodePage(long int codePage);
+	static void setCodePage(long int codePage);
 
 	// Define a cores do texto (foreground) e de fundo (background).
 	static void textColor(Background background, Foreground foreground);
